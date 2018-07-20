@@ -10,24 +10,10 @@ import android.support.v4.hardware.fingerprint.FingerprintManagerCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.dialog_fingerprint.*
 import java.io.IOException
 import java.security.*
 import java.security.cert.CertificateException
-import javax.crypto.Cipher
-import javax.crypto.KeyGenerator
-import javax.crypto.NoSuchPaddingException
-import javax.crypto.SecretKey
-import android.os.Build
-import android.os.Bundle
-import android.security.keystore.KeyGenParameterSpec
-import android.security.keystore.KeyPermanentlyInvalidatedException
-import android.security.keystore.KeyProperties
-import android.support.v4.hardware.fingerprint.FingerprintManagerCompat
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import java.io.IOException
-import java.security.*
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.NoSuchPaddingException
@@ -45,7 +31,7 @@ class FingerprintDialog : DialogFragment(), FingerprintController.Callback {
 
     private val controller: FingerprintController by lazy {
         FingerprintController(
-                FingerprintManagerCompat.from(context),
+                FingerprintManagerCompat.from(this.context!!),
                 this,
                 titleTextView,
                 subtitleTextView,
@@ -72,15 +58,15 @@ class FingerprintDialog : DialogFragment(), FingerprintController.Callback {
      */
     private var keyGenerator: KeyGenerator? = null
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater?.inflate(R.layout.dialog_fingerprint, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.dialog_fingerprint, container, false)
 
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        controller.setTitle(arguments.getString(ARG_TITLE))
-        controller.setSubtitle(arguments.getString(ARG_SUBTITLE))
+        controller.setTitle(arguments!!.getString(ARG_TITLE))
+        controller.setSubtitle(arguments!!.getString(ARG_SUBTITLE))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
